@@ -285,9 +285,6 @@ div.smoothie-chart-tooltip {
   justify-content: center;
   align-items: center;
 }
-#stopRec {
-  display: none;
-}
 
 /*for tooltips*/
 [data-tooltip]:before {
