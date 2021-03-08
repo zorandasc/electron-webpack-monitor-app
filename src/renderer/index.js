@@ -1,0 +1,6 @@
+//document.getElementById('app').innerHTML="kurec"
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from "./App"
+
+ReactDOM.render(<App></App>, document.getElementById('app'));

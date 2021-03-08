@@ -1,0 +1,317 @@
+.menubar-menu-button {
+  color: rgb(234, 235, 235);
+  letter-spacing: 2px;
+}
+.window-title {
+  color: rgb(234, 235, 235);
+  font-size: 16px;
+}
+
+.toolbar {
+  background: rgb(26, 33, 34);
+}
+
+.toolbar-actions {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.toolbar-actions .btn-positive {
+  width: 5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  margin: 1rem;
+  margin-left: 1.5rem;
+  cursor: pointer;
+  background: none;
+  border-color: rgb(228, 100, 37);
+  color: rgb(228, 100, 37);
+  font-size: 20px;
+  letter-spacing: 2px;
+
+  box-shadow: 0 0 10px rgb(228, 100, 37);
+  animation: glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 10px;
+  }
+  to {
+    box-shadow: 0 0 30px;
+  }
+}
+
+#discntBtn {
+  display: none;
+}
+
+.toolbar-actions textarea {
+  text-align: center;
+  display: block;
+  background-color: black;
+  color: rgb(245, 87, 111);
+  letter-spacing: 2px;
+  margin: 1rem 2rem;
+}
+textarea::placeholder {
+  color: lightblue;
+  letter-spacing: 2px;
+}
+
+.form-group label {
+  color: rgb(234, 235, 235);
+}
+/*-----------------------------------------------------------------------------*/
+/*INTERFACES*/
+.tab-group {
+  border: none;
+  min-height: 2.5rem;
+}
+
+.tab-item {
+  cursor: pointer;
+  line-height: 1;
+  border: none;
+  color: rgb(234, 235, 235);
+  background: rgb(36, 44, 46);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+  transition: transform 0.5s;
+}
+
+.tab-item .img-circle {
+  color: rgb(234, 235, 235);
+}
+
+.tab-item span {
+  font-size: 1.5rem;
+  color: rgb(234, 235, 235);
+}
+.tab-item p {
+  letter-spacing: 2px;
+}
+
+.tab-item.active {
+  background: rgb(228, 100, 37);
+  color: rgb(234, 235, 235);
+
+  box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.6),
+    inset -4px -4px 6px -1px rgba(119, 123, 123, 0.7),
+    -0.5px -0.5px 0px rgba(119, 123, 123, 1),
+    0.5px 0.5px 0px rgba(0, 0, 0, 0.15), 0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+}
+.active2 {
+  box-shadow: inset 4px 4px 6px -1px rgba(0, 0, 0, 0.6),
+    inset -4px -4px 6px -1px rgba(119, 123, 123, 0.7),
+    -0.5px -0.5px 0px rgba(119, 123, 123, 1),
+    0.5px 0.5px 0px rgba(0, 0, 0, 0.15), 0px 12px 10px -10px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+}
+
+.active2 .icon-record {
+  color: rgb(228, 100, 37);
+}
+/*-----------------------------------------------------------------------------*/
+/*WINDOW GRAF*/
+
+div.smoothie-chart-tooltip {
+  background: #444;
+  padding: 1em;
+  margin-top: 20px;
+  font-family: consolas;
+  color: rgb(234, 235, 235);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.window-content {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(26, 33, 34);
+  position: relative;
+  min-height: 280px;
+}
+.window-content p {
+  color: rgb(234, 235, 235);
+  padding-left: 1rem;
+}
+
+/*LEGENDA*/
+.legend {
+  position: absolute;
+  left: 30%;
+  top: 0rem;
+  display: flex;
+}
+.legend p {
+  cursor: pointer;
+  letter-spacing: 2px;
+  color: gray;
+}
+
+.legend .icon-down {
+  color: lightgreen;
+}
+
+.legend .icon-up {
+  color: rgb(255, 0, 255);
+}
+/*ukljucimo iskljucimo down/up*/
+.icon-down.off,
+.icon-up.off {
+  color: #444;
+}
+
+/*DIALOG*/
+.dialog {
+  position: fixed;
+  top: 60%;
+  left: 0;
+  width: 12rem;
+  background: rgb(26, 33, 34, 0.7);
+  z-index: 10;
+  transform: translateX(-12rem);
+  transition: transform 0.5s;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.dialog p {
+  color: tomato;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+
+#ssid {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  background: rgb(26, 33, 34, 0.7);
+  color: lightblue;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  transition: transform 0.5s;
+  transform: translateY(-50px);
+}
+
+.krugovi {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  color: #444;
+}
+.mjerna {
+  color: rgb(234, 235, 235);
+  position: absolute;
+  letter-spacing: 2px;
+  top: -1rem;
+  right: 2rem;
+}
+/*MAX VALUES*/
+.max {
+  color: gray;
+  position: absolute;
+  letter-spacing: 2px;
+  font-size: 10px;
+  left: 0rem;
+}
+
+.svg-wrapper {
+  z-index: 100;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 1rem 0;
+  margin-left: 1rem;
+}
+
+.shape {
+  border-radius: 100%;
+  transition: stroke-width 1s, stroke-dashoffset 1s, stroke-dasharray 1s;
+  border-radius: 100%;
+  animation: krug 3s infinite;
+}
+.textCircleDown,
+.textCircleUp {
+  cursor: pointer;
+  font-family: consolas;
+  font-size: 12px;
+  line-height: 80px;
+  letter-spacing: 2px;
+  height: 125px;
+  color: #fff;
+  top: 0;
+  position: absolute;
+  left: 0;
+  width: 80px;
+  text-align: center;
+}
+.textCircleUp {
+  line-height: 80px;
+}
+
+@keyframes krug {
+  0% {
+    stroke-width: 2px;
+    stroke-dasharray: 0 540;
+    stroke-dashoffset: -474;
+  }
+  50% {
+    stroke-width: 1px;
+    stroke-dasharray: 760;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-width: 0px;
+    stroke-dasharray: 760;
+    stroke-dashoffset: 0;
+  }
+}
+/*-----------------------------------------------------------------------------*/
+/*START STOP KONTROLA*/
+.control {
+  height: 3rem;
+}
+
+.control .tab-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#stopRec {
+  display: none;
+}
+
+/*for tooltips*/
+[data-tooltip]:before {
+  position: absolute;
+  top: -2rem;
+  padding: 0.5rem;
+  content: attr(data-tooltip);
+  opacity: 0;
+  background: rgb(26, 33, 34, 0.8);
+  color: rgb(228, 100, 37);
+  transition: opacity 0.4s ease-in-out;
+}
+[data-tooltip]:hover:before {
+  opacity: 1;
+}
+[data-tooltip]:not([data-tooltip-persistent]):before {
+  pointer-events: none;
+}
+
+#stopRec[data-tooltip]:before {
+  opacity: 1;
+}
+
+.svg-wrapper[data-tooltip]:before {
+  top: 4rem;
+  left: 0.5rem;
+}

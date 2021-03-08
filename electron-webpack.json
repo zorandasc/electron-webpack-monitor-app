@@ -1,0 +1,12 @@
+{
+  "title": "RGW Traffic Monitor",
+  "main": {
+    "sourceDirectory": "src/main"
+  },
+  "renderer": {
+    "sourceDirectory": "src/renderer",
+    "template": "src/renderer/index.html"
+  },
+  "commonSourceDirectory": "src/common",
+  "staticSourceDirectory": "src/static"
+}
