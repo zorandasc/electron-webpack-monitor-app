@@ -50,14 +50,7 @@ const App = () => {
     const canvas=useRef(null)
    
     //var textarea= document.getElementById("ta")
-    const textarea=useRef(null)
-
-    //var start = document.getElementById("start")
-    const start=useRef(null)
-
-    //var stop = document.getElementById("stop")
-    const stop=useRef(null)
-   
+    const textarea=useRef(null)   
 
     const connect=()=>{
         ipcRenderer.invoke('connect')  
@@ -113,7 +106,44 @@ const App = () => {
         }
     }
 
-    
+    //status dobijen od mejna tokom i konektovanja
+    ipcRenderer.on('connect-result', function (event, arg) {
+
+        if (arg.toString() == "Connection open.") {
+            setConnectionOpen(true)
+            textarea.style.color = "lightgreen"
+
+        } else if (arg.toString() == "Connection closed." || arg.toString() == "Conecting....") {
+            setConnectionOpen(false)
+            textarea.style.color = "lightblue"
+        } else {
+            //ENYTHING ELSE including ERROR OCURED
+            setConnectionOpen(false)
+            textarea.style.color = "rgb(245, 87, 111)"
+        }
+
+        textarea.innerHTML = arg;
+
+    })
+
+    //rezultati dobijeni od maina unutar koje imaintervalna petlja
+    ipcRenderer.on('resultValDown', function (event, arg) {              
+        var resultDown = Number(arg);
+        series1.append(Date.now(), resultDown);
+    })
+
+    //rezultati dobijeni od maina unutar koje imaintervalna petlja
+    ipcRenderer.on('resultValUp', function (event, arg) {
+        var resultUp = Number(arg);
+        series2.append(Date.now(), resultUp);
+    })
+
+    //za dobijanje ssid name ali samo jednom tokomp prvog
+    ipcRenderer.on('ssid', function (event, arg) {
+        //console.log(arg)
+        setSsid(arg.toString())
+    })
+
     
    
 
@@ -156,11 +186,20 @@ const App = () => {
                 <canvas ref={canvas} id="mycanvas"  width="600" height="250"></canvas>   
                 <Krugovi resultDown resultUp></Krugovi>
             </div>
+            
             <div className="tab-group control">           
-                <div className="tab-item active" ref={stop} id="stop" onClick={stopGraf} data-tooltip="STOP GRAF">
+                <div 
+                    className={grafStarted?"tab-item active":"tab-item"} 
+                    id="stop" 
+                    onClick={stopGraf} 
+                    data-tooltip="STOP GRAF">
                     <span className="icon icon-stop"></span>
                 </div>
-                <div className="tab-item" ref={start} id="start" onClick={startGraf} data-tooltip="START GRAF">
+                <div 
+                    className={grafStarted?"tab-item":"tab-item active"}
+                    id="start" 
+                    onClick={startGraf} 
+                    data-tooltip="START GRAF">
                     <span className="icon icon-play"></span>
                 </div>
                <Recorder></Recorder>
