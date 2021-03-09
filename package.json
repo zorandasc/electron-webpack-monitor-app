@@ -18,6 +18,9 @@
     "electron": "8.2.0",
     "electron-builder": "^22.4.1",
     "electron-webpack": "^2.8.2",
-    "webpack": "~4.42.1"
+    "webpack": "~4.42.1",
+    "custom-electron-titlebar": "^3.2.6",
+    "electron-settings": "^4.0.2",
+    "simple-encryptor": "^4.0.0"
   }
 }

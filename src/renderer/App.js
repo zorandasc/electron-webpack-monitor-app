@@ -1,20 +1,30 @@
-import React, {useRef, useState} from 'react';
+import React, {useState} from 'react';
 import { ipcRenderer, remote } from 'electron'
 const { dialog } = remote;
 
+
+const customTitlebar = require('custom-electron-titlebar');
 
 import '../static/css/photon.min.css'
 import './index.css'
 
 import imgWifi from '../assets/wifi.png'
 import imgEther from '../assets/ether.png'
+
 import ConBtn from "../components/ConBtn"
+import TextArea from "../components/TextArea"
 import Interfaces from "../components/Interfaces"
+import Canvas from "../components/Canvas"
 import Legend from "../components/Legend"
 import Krugovi from "../components/Krugovi"
-import Recorder from "../components/Recorder"
 import Dialog from "../components/Dialog"
 import Ssid from "../components/Ssid"
+import Recorder from "../components/Recorder"
+
+var titleBar=new customTitlebar.Titlebar({
+    backgroundColor: customTitlebar.Color.fromHex('#e46425'),
+    overflow:'hidden'
+});
 
 const portovi=[
     {id:1,label:'Wifi',img:imgWifi },
@@ -22,7 +32,6 @@ const portovi=[
     {id:3, label:'Ethernet 3', img:imgEther},
     {id:4, label:'Ethernet 4', img:imgEther},
     {id:5, label:'Ethernet 1', img:imgEther},
-
 ]
 
 const App = () => {
@@ -36,6 +45,9 @@ const App = () => {
     
     //is conection started
     const [connectionOpen, setConnectionOpen]=useState(false)
+  
+    //textarea
+    const [textarea, setTextarea]=useState({msg:"", color:"lightblue"})
 
     //is graf started
     const [grafStarted, setGrafStarted]=useState(false)
@@ -46,11 +58,9 @@ const App = () => {
     //for setting wifi ssid
     const [ssid, setSsid]=useState("")
 
-    //var canvas = document.getElementById("mycanvas");
-    const canvas=useRef(null)
-   
-    //var textarea= document.getElementById("ta")
-    const textarea=useRef(null)   
+  
+    const [resultDown, setResultDown]=useState(0)
+    const [resultUp, setResultUp]=useState(0)
 
     const connect=()=>{
         ipcRenderer.invoke('connect')  
@@ -63,7 +73,7 @@ const App = () => {
     }
 
     const setDownUp=(direction)=>{
-        //console.log(direction)
+        //CHECK IF GRAF STARTED
         if(!grafStarted){
             direction==="down"?setDown(!down):setUp(!up)
         }
@@ -71,13 +81,9 @@ const App = () => {
 
     const startGraf=()=>{
         if(connectionOpen){
-            start.current.classList.add("active") 
-            stop.current.classList.remove("active") 
-
             //SETUJ GRAF STARTED
             setGrafStarted(true)
-
-            //POSALJI MAINU PORT, DOWN, UP
+            //POSALJI MAINU SELECTED PORT, DOWN, UP
             ipcRenderer.invoke('startGraf', selected, down,up) 
             
             //SHOW DIALOG STARTED
@@ -91,8 +97,6 @@ const App = () => {
 
     const stopGraf=()=>{
         if(grafStarted){
-            stop.current.classList.add("active")
-            start.current.classList.remove("active")
 
             //OBRISI SSID
             setSsid("")
@@ -108,34 +112,35 @@ const App = () => {
 
     //status dobijen od mejna tokom i konektovanja
     ipcRenderer.on('connect-result', function (event, arg) {
-
-        if (arg.toString() == "Connection open.") {
-            setConnectionOpen(true)
-            textarea.style.color = "lightgreen"
-
-        } else if (arg.toString() == "Connection closed." || arg.toString() == "Conecting....") {
-            setConnectionOpen(false)
-            textarea.style.color = "lightblue"
-        } else {
-            //ENYTHING ELSE including ERROR OCURED
-            setConnectionOpen(false)
-            textarea.style.color = "rgb(245, 87, 111)"
-        }
-
-        textarea.innerHTML = arg;
-
+        let message=arg.toString()
+        let colorMsg="whitesmoke"
+        switch(message) {
+            case "Connection open.":
+                setConnectionOpen(true)
+                colorMsg="lightgreen"
+                break;
+            case "Connection closed." || "Conecting....":
+                colorMsg="lightblue"
+                break;
+            default:
+                setConnectionOpen(false)
+                colorMsg="rgb(245, 87, 111)"
+        } 
+        setTextarea({ msg: message, color: colorMsg });
     })
 
     //rezultati dobijeni od maina unutar koje imaintervalna petlja
-    ipcRenderer.on('resultValDown', function (event, arg) {              
-        var resultDown = Number(arg);
-        series1.append(Date.now(), resultDown);
+    ipcRenderer.on('resultValDown', function (event, arg) {  
+        setResultDown(Number(arg));
+        //console.log("resuldown",resultDown)  
+        //series1.append(Date.now(), resultDown);
     })
 
     //rezultati dobijeni od maina unutar koje imaintervalna petlja
     ipcRenderer.on('resultValUp', function (event, arg) {
-        var resultUp = Number(arg);
-        series2.append(Date.now(), resultUp);
+        setResultUp(Number(arg));
+        //console.log("resultup",resultUp)
+        //series2.append(Date.now(), resultUp);
     })
 
     //za dobijanje ssid name ali samo jednom tokomp prvog
@@ -157,13 +162,7 @@ const App = () => {
                         connect={connect} 
                         disConnect={disConnect}>
                     </ConBtn>
-                    <textarea 
-                        className="form-control" 
-                        ref={textarea}
-                        id="ta" name="ta" rows="3" cols="10"
-                        placeholder={process.env.ELECTRON_WEBPACK_APP_KUREC}
-                        readOnly>
-                    </textarea>
+                    <TextArea value={textarea}></TextArea>
                 </div>
             </header>
             <Interfaces 
@@ -182,21 +181,20 @@ const App = () => {
                     down={down} 
                     up={up}>
                 </Legend>
-                
-                <canvas ref={canvas} id="mycanvas"  width="600" height="250"></canvas>   
-                <Krugovi resultDown resultUp></Krugovi>
+                <Canvas resultDown={resultDown} resultUp={resultUp}></Canvas>
+                <Krugovi resultDown={resultDown} resultUp={resultUp}></Krugovi>
             </div>
             
             <div className="tab-group control">           
                 <div 
-                    className={grafStarted?"tab-item active":"tab-item"} 
+                    className={grafStarted?"tab-item":"tab-item active"} 
                     id="stop" 
                     onClick={stopGraf} 
                     data-tooltip="STOP GRAF">
                     <span className="icon icon-stop"></span>
                 </div>
                 <div 
-                    className={grafStarted?"tab-item":"tab-item active"}
+                    className={grafStarted?"tab-item active":"tab-item"}
                     id="start" 
                     onClick={startGraf} 
                     data-tooltip="START GRAF">

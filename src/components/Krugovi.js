@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 const Krug=({value, onClick, colorBor})=>{
     return (
@@ -11,21 +11,28 @@ const Krug=({value, onClick, colorBor})=>{
     )
 }
 
-const Krugovi = (resultDown,resultUp) => {
+const Krugovi = ({resultDown,resultUp}) => {
+    
     const [downMax, setDownMax]=useState(0)
     const [upMax, setUpMax]=useState(0)
 
-    if(resultDown > downMax){
-        setDownMax(resultDown)
-    }
-    if (resultUp > upMax) {
-        setUpMax(resultUp)
-    }
+    useEffect(()=>{
+     
+        if(resultDown > downMax){
+            setDownMax(resultDown)
+        }
+       
+        if (resultUp > upMax) {
+            setUpMax(resultUp)
+        }
+
+    },[resultDown,resultUp])
+
+    
+    //console.log("MAX VALUES: ", downMax, upMax )
 
     function clearMax(direction){
-        direction === "down"?
-            setDownMax(0):
-            setUpMax(0)
+        direction === "down"?setDownMax(0):setUpMax(0)
     }
 
     return (
