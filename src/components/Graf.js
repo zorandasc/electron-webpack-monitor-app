@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import SmoothieComponent, { TimeSeries } from "react-smoothie";
 
 const Graf = ({ resultDown, resultUp }) => {
-  const ts1 = new TimeSeries({});
-  const ts2 = new TimeSeries({});
-
+  //pretvorio sam ih u refove jer omogucuhju
+  //da se ts1 i ts2 ne resetuju na nulu nakon
+  //svakog rerenderovanja, sto bi bilo
+  //da nema ref, vec da zadrze prethodnu 
+  //iu samo apewndujes novu
+  let ts1 =useRef(new TimeSeries({}));
+  let ts2=useRef(new TimeSeries({})) 
  
-  setInterval(() => {
-    var time = new Date().getTime();
-    ts1.append(time, Math.random());
-    ts2.append(time, Math.random());
-  }, 500);
+  var time = new Date().getTime();
+  ts1.current.append(time, resultDown);
+  ts2.current.append(time, resultUp);
+ 
 
   const toolTiponja = (props) => {
     if (!props.display) return <div />;
@@ -38,6 +41,7 @@ const Graf = ({ resultDown, resultUp }) => {
 
   return (
     <SmoothieComponent
+      interpolation="bezier"
       labels={{fontSize:15}}
       minValue={0} 
       maxValueScale= {1.2}
@@ -49,13 +53,13 @@ const Graf = ({ resultDown, resultUp }) => {
       tooltip={toolTiponja}
       series={[
         {
-          data: ts1,
+          data: ts1.current,
           strokeStyle: { g: 255 },
           fillStyle: { r:144, g:238, b:144, a:0.4 },
           lineWidth: 2,
         },
         {
-          data: ts2,
+          data: ts2.current,
           strokeStyle: { r: 255 },
           fillStyle: { r:250, g:38, b:0,a:0.4  },
           lineWidth: 2,

@@ -191,6 +191,7 @@ textarea::placeholder {
   letter-spacing: 2px;
   transition: transform 0.5s;
   transform: translateY(-50px);
+  z-index: 100;
 }
 
 .krugovi {

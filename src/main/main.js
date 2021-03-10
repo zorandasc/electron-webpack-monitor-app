@@ -21,6 +21,10 @@ var defProtocol = "23";
 var defUsername = process.env.ELECTRON_WEBPACK_APP_USER;
 var defPassword = process.env.ELECTRON_WEBPACK_APP_PASS;
 
+// isConnected koristimo kod citanja
+//na pocetku je false pa ocitaj tok konektovanja
+//ako je cucces onad je true , i onda
+//samo preskoci citanje sytstusa
 var isConnected = false;
 
 //return from setInterval()

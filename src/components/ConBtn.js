@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ConBtn = ({connectionOpen, connect, disConnect}) => {
+const ConBtn = ({connect, disConnect}) => {
     //toggle betwen two button not regarding
     //connect state
     //odnosn kakvo god da je stanje poslije start connect
@@ -11,6 +11,8 @@ const ConBtn = ({connectionOpen, connect, disConnect}) => {
             {toggleBtn?
             <button 
                 className="btn btn-positive" 
+                //toggluj btn bez obzira na connection status
+                //omogucuje cleaning up
                 onClick={()=>{setToggleBtn(!toggleBtn); disConnect()}} 
                 id="discntBtn">
                 Close

@@ -149,7 +149,6 @@ const App = () => {
       <header className="toolbar toolbar-header">
         <div className="toolbar-actions">
           <ConBtn
-            connectionOpen={connOpen}
             connect={connect}
             disConnect={disConnect}
           ></ConBtn>
@@ -159,13 +158,15 @@ const App = () => {
       <Interfaces
         data={portovi}
         selected={selected}
-        setPort={(arg) => !connOpen && setSelected(arg)}
+        //if grafstrted you canot change
+        setPort={(arg) => !grafStarted && setSelected(arg)}
       ></Interfaces>
       <Dialog show={showDialog} onClose={() => setShowDialog("")}></Dialog>
       <div className="window-content">
         <Ssid ssid={ssid}></Ssid>
         <Legend
-          setDirection={(arg) => !connOpen && setDownUp(arg)}
+          //if grafstrted you canot change
+          setDirection={(arg) => !grafStarted && setDownUp(arg)}
           down={down}
           up={up}
         ></Legend>
