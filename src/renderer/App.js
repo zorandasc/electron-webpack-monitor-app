@@ -14,6 +14,7 @@ import ConBtn from "../components/ConBtn";
 import TextArea from "../components/TextArea";
 import Interfaces from "../components/Interfaces";
 import Graf from "../components/Graf";
+import Graf1 from "../components/Graf1";
 import Legend from "../components/Legend";
 import Krugovi from "../components/Krugovi";
 import Dialog from "../components/Dialog";
@@ -35,7 +36,7 @@ const portovi = [
 
 const App = () => {
   //for selected port
-  const [selected, setSelected] = useState(1);
+  const [selected, setSelected] = useState(5);
 
   //enable disable down/up
   const [down, setDown] = useState(true);
@@ -167,7 +168,7 @@ const App = () => {
           down={down}
           up={up}
         ></Legend>
-        <Graf resultDown={resultDown} resultUp={resultUp}></Graf>
+        <Graf1 resultDown={resultDown} resultUp={resultUp}></Graf1>
         <Krugovi resultDown={resultDown} resultUp={resultUp}></Krugovi>
       </div>
 
