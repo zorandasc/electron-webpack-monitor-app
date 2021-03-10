@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain, Menu } = require("electron");
-import * as path from 'path'
+import * as path from "path";
 
 var net = require("net");
 //for storing user connection credencialon pc
@@ -7,7 +7,7 @@ var net = require("net");
 // Create an encryptor for encrypt enterd user credencial
 //var encryptor = require("simple-encryptor")(process.env.ELECTRON_WEBPACK_APP_KEY);
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 var win;
 var settingWin;
@@ -42,7 +42,6 @@ var newBajtUp;
 var resultBRDown;
 var resultBRUp;
 
-
 //string paterns for exstracting resulting bajts
 var transmitString;
 var receiveString;
@@ -67,14 +66,15 @@ function createWindow() {
   });
 
   if (isDevelopment) {
-    win.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`)
-  }
-  else {
-    win.loadURL(formatUrl({
-      pathname: path.join(__dirname, 'index.html'),
-      protocol: 'file',
-      slashes: true
-    }))
+    win.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
+  } else {
+    win.loadURL(
+      formatUrl({
+        pathname: path.join(__dirname, "index.html"),
+        protocol: "file",
+        slashes: true,
+      })
+    );
   }
 
   win.on("closed", function () {
@@ -196,41 +196,41 @@ client.setEncoding("utf8");
 
 // ... do actions on behalf of the Renderer
 ipcMain.handle("connect", (event, ...args) => {
-  console.log("START CONNECTION")
+  console.log("START CONNECTION");
   //first get the stored setting if it has any
   //settings.get("key").then((data) => {
-    //console.log("DATA", data)
-    //var { strIp, strProtocol, strUsername, strPassword } = data;
-    //var strIp= strProtocol= strUsername= strPassword=null 
+  //console.log("DATA", data)
+  //var { strIp, strProtocol, strUsername, strPassword } = data;
+  //var strIp= strProtocol= strUsername= strPassword=null
 
-    var newIpAdress =  defIpAdress;
-    var newProtocol =  defProtocol;
-    var newUsername =  defUsername;
-    var newPassword =  defPassword;
+  var newIpAdress = defIpAdress;
+  var newProtocol = defProtocol;
+  var newUsername = defUsername;
+  var newPassword = defPassword;
 
-    console.log(newIpAdress,newProtocol,newUsername,newPassword )
+  console.log(newIpAdress, newProtocol, newUsername, newPassword);
 
-    //and then try to connect to client
-    client.connect(newProtocol, newIpAdress, () => {
-      client.write(`${newUsername}\r\n`);
-      setTimeout(() => {
-        client.write(`${newPassword}\r\n`);
-        client.setTimeout(0);
-      }, 2000);
-    });
+  //and then try to connect to client
+  client.connect(newProtocol, newIpAdress, () => {
+    client.write(`${newUsername}\r\n`);
+    setTimeout(() => {
+      client.write(`${newPassword}\r\n`);
+      client.setTimeout(0);
+    }, 2000);
+  });
 
-    //ovo je bitno ako je npr. pogrsna ip adrsesa
-    if (client.connecting) {
-      win.webContents.send("connect-result", "Conecting....");
-      //setuj time out na 9 sekundi =>ovo  ce nas odvesti nakon 9s na ontimeuout listener
-      client.setTimeout(9000);
-    }
+  //ovo je bitno ako je npr. pogrsna ip adrsesa
+  if (client.connecting) {
+    win.webContents.send("connect-result", "Conecting....");
+    //setuj time out na 9 sekundi =>ovo  ce nas odvesti nakon 9s na ontimeuout listener
+    client.setTimeout(9000);
+  }
   //});
 });
 
 // ... do actions on behalf of the Renderer
 ipcMain.handle("disconnect", (event, ...args) => {
-  console.log("diconent main")
+  console.log("diconent main");
   isConnected = false;
   firstReadDown = true;
   firstReadUp = true;
@@ -295,12 +295,12 @@ client.on("data", function (data) {
   var data = data.toString();
   if (!isConnected) {
     isConnected = checkConnectStatus(data);
-    console.log("ISCONNECTEDDDD", isConnected)
+    console.log("ISCONNECTEDDDD", isConnected);
     return;
   }
 
   //for gettting ssid name, but only at begginig of wifi reading
-  if ((firstReadDown || firstReadUp) && wifiSelected == 1) {
+  if ((firstReadDown || firstReadUp) && wifiSelected == 5) {
     //(:?^|\s)nothing in front, regexp-lookahead-lookbehind <=operater
     //uzmi sve alafnumerice [a-z0-9] iza (:?^|\s)SSID\s\s+:\s) paterna
     var ssidPatern = data.match(/(?<=(:?^|\s)SSID\s\s+:\s)[a-z0-9]+/g);
@@ -374,7 +374,7 @@ function checkConnectStatus(data) {
 function intervalPortStatistics(portNum) {
   //novi nacin ekstraktovanja :
   //https://javascript.info/regexp-lookahead-lookbehind <=operater
-  if (portNum === 1) {
+  if (portNum === 5) {
     //for wifi
     transmitString = /(?<=TotalBytesSent \s\s+:\s)\d+/g;
     receiveString = /(?<=TotalBytesReceived \s\s+:\s)\d+/g;
@@ -393,6 +393,6 @@ function intervalPortStatistics(portNum) {
 function calculateBitRate(newBajt, oldBajt) {
   let result = (newBajt - oldBajt) / timeInterval; //BAJTA/s
   result = result * 8; //bits/s
-  result = result / 1000 /1000; //Mbits/s
+  result = result / 1000 / 1000; //Mbits/s
   return result;
 }

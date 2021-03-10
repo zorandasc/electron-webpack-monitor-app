@@ -26,11 +26,11 @@ var titleBar = new customTitlebar.Titlebar({
 });
 
 const portovi = [
-  { id: 1, label: "Wifi", img: imgWifi },
+  { id: 5, label: "Wifi", img: imgWifi },
+  { id: 1, label: "Ethernet 1", img: imgEther },
   { id: 2, label: "Ethernet 2", img: imgEther },
   { id: 3, label: "Ethernet 3", img: imgEther },
   { id: 4, label: "Ethernet 4", img: imgEther },
-  { id: 5, label: "Ethernet 1", img: imgEther },
 ];
 
 const App = () => {
@@ -148,10 +148,7 @@ const App = () => {
     <div className="window">
       <header className="toolbar toolbar-header">
         <div className="toolbar-actions">
-          <ConBtn
-            connect={connect}
-            disConnect={disConnect}
-          ></ConBtn>
+          <ConBtn connect={connect} disConnect={disConnect}></ConBtn>
           <TextArea value={textarea}></TextArea>
         </div>
       </header>
