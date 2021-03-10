@@ -152,6 +152,9 @@ const App = () => {
           <ConBtn connect={connect} disConnect={disConnect}></ConBtn>
           <TextArea value={textarea}></TextArea>
         </div>
+        <a href="/?route=settings" style={{ color: "wheat" }}>
+          KURCINA PALCIAN
+        </a>
       </header>
       <Interfaces
         data={portovi}

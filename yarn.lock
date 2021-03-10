@@ -5374,6 +5374,11 @@ react-dom@^17.0.1:
     object-assign "^4.1.1"
     scheduler "^0.20.1"
 
+react-router-static@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-router-static/-/react-router-static-1.0.0.tgz#ec1ba3d31d88f6a975441412c20167c3007174f6"
+  integrity sha512-6VPHFny/2AlYRFeDQOxlmk296MKyFEgOp7ExQxAuD/EzTAnHL4hzVKpOAfswWeE6txuuvcNo4BVi3av9s0YIPA==
+
 react-smoothie@^0.12.6:
   version "0.12.6"
   resolved "https://registry.yarnpkg.com/react-smoothie/-/react-smoothie-0.12.6.tgz#2a24885f811e58e262f8b3dfab88c8285833e8dd"
