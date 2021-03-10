@@ -112,8 +112,7 @@ textarea::placeholder {
 }
 /*-----------------------------------------------------------------------------*/
 /*WINDOW GRAF*/
-
-div.smoothie-chart-tooltip {
+.smoothie-chart-tooltip {
   background: #444;
   padding: 1em;
   margin-top: 20px;

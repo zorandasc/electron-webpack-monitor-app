@@ -9,8 +9,12 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "dependencies": {
+    "custom-electron-titlebar": "^3.2.6",
+    "electron-settings": "^4.0.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-smoothie": "^0.12.6",
+    "simple-encryptor": "^4.0.0",
     "source-map-support": "^0.5.16"
   },
   "devDependencies": {
@@ -18,9 +22,6 @@
     "electron": "8.2.0",
     "electron-builder": "^22.4.1",
     "electron-webpack": "^2.8.2",
-    "webpack": "~4.42.1",
-    "custom-electron-titlebar": "^3.2.6",
-    "electron-settings": "^4.0.2",
-    "simple-encryptor": "^4.0.0"
+    "webpack": "~4.42.1"
   }
 }

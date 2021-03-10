@@ -13,7 +13,7 @@ import imgEther from "../assets/ether.png";
 import ConBtn from "../components/ConBtn";
 import TextArea from "../components/TextArea";
 import Interfaces from "../components/Interfaces";
-import Canvas from "../components/Canvas";
+import Graf from "../components/Graf";
 import Legend from "../components/Legend";
 import Krugovi from "../components/Krugovi";
 import Dialog from "../components/Dialog";
@@ -169,7 +169,7 @@ const App = () => {
           down={down}
           up={up}
         ></Legend>
-        <Canvas resultDown={resultDown} resultUp={resultUp}></Canvas>
+        <Graf resultDown={resultDown} resultUp={resultUp}></Graf>
         <Krugovi resultDown={resultDown} resultUp={resultUp}></Krugovi>
       </div>
 
