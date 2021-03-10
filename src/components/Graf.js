@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SmoothieComponent, { TimeSeries } from "react-smoothie";
 
 const Graf = ({ resultDown, resultUp }) => {
   const ts1 = new TimeSeries({});
   const ts2 = new TimeSeries({});
 
+ 
   setInterval(() => {
     var time = new Date().getTime();
-    let mts1 = Math.random();
-    let mts2 = Math.random();
-    ts1.append(time, mts1);
-    ts2.append(time, mts2);
+    ts1.append(time, Math.random());
+    ts2.append(time, Math.random());
   }, 500);
 
   const toolTiponja = (props) => {
@@ -18,23 +17,15 @@ const Graf = ({ resultDown, resultUp }) => {
 
     return (
       <div
-        style={{
-          userSelect: "none",
-          background: "rgba(0,0,0,0.5)",
-          padding: "1em",
-          marginLeft: "20px",
-          fontFamily: "consolas",
-          color: "white",
-          fontSize: "10px",
-          pointerEvents: "none",
-        }}
+      className="smoothie-chart-tooltip"
       >
-        <strong>{props.time}</strong>
+        <strong>{new Date(props.time).toLocaleTimeString('en-IT', { hour12: false }) }</strong>
         {props.data ? (
           <ul>
             {props.data.map((data, i) => (
-              <li key={i} style={{ color: data.series.options.strokeStyle }}>
-                {data.value}
+              <li key={i} 
+                style={{ color: data.series.options.strokeStyle }}>
+                {data.value.toFixed(2)}
               </li>
             ))}
           </ul>
@@ -47,7 +38,11 @@ const Graf = ({ resultDown, resultUp }) => {
 
   return (
     <SmoothieComponent
-      style={{ display: "none" }}
+      labels={{fontSize:15}}
+      minValue={0} 
+      maxValueScale= {1.2}
+      timestampFormatter={(time)=>time.toLocaleTimeString('en-IT', { hour12: false })}
+    
       height={250}
       width={600}
       nonRealtimeData={false}
@@ -56,14 +51,14 @@ const Graf = ({ resultDown, resultUp }) => {
         {
           data: ts1,
           strokeStyle: { g: 255 },
-          fillStyle: { g: 255 },
-          lineWidth: 4,
+          fillStyle: { r:144, g:238, b:144, a:0.4 },
+          lineWidth: 2,
         },
         {
           data: ts2,
           strokeStyle: { r: 255 },
-          fillStyle: { r: 255 },
-          lineWidth: 4,
+          fillStyle: { r:250, g:38, b:0,a:0.4  },
+          lineWidth: 2,
         },
       ]}
     />

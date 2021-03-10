@@ -389,6 +389,6 @@ function intervalPortStatistics(portNum) {
 function calculateBitRate(newBajt, oldBajt) {
   let result = (newBajt - oldBajt) / timeInterval; //BAJTA/s
   result = result * 8; //bits/s
-  result = result / 1000; //Mbits/s
+  result = result / 1000 /1000; //Mbits/s
   return result;
 }

@@ -113,9 +113,8 @@ textarea::placeholder {
 /*-----------------------------------------------------------------------------*/
 /*WINDOW GRAF*/
 .smoothie-chart-tooltip {
-  background: #444;
-  padding: 1em;
-  margin-top: 20px;
+  background: rgb(36, 44, 46, 0.7);
+  padding: 0 8px;
   font-family: consolas;
   color: rgb(234, 235, 235);
   font-size: 14px;
@@ -142,6 +141,7 @@ textarea::placeholder {
   left: 30%;
   top: 0rem;
   display: flex;
+  z-index: 100;
 }
 .legend p {
   cursor: pointer;
@@ -154,7 +154,7 @@ textarea::placeholder {
 }
 
 .legend .icon-up {
-  color: rgb(255, 0, 255);
+  color: rgb(250, 38, 0);
 }
 /*ukljucimo iskljucimo down/up*/
 .icon-down.off,
@@ -169,7 +169,7 @@ textarea::placeholder {
   left: 0;
   width: 12rem;
   background: rgb(26, 33, 34, 0.7);
-  z-index: 10;
+  z-index: 100;
   transform: translateX(-12rem);
   transition: transform 0.5s;
   padding-left: 1rem;

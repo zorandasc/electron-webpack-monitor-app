@@ -47,7 +47,7 @@ const Krugovi = ({resultDown,resultUp}) => {
             <Krug 
                 value={upMax.toFixed(2)} 
                 onClick={()=>clearMax('up')} 
-                colorBor="rgb(255, 0, 255)">
+                colorBor="rgb(250,38,0)">
             </Krug>    
         </div>
     );
