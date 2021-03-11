@@ -79,9 +79,6 @@ textarea::placeholder {
   color: rgb(228, 100, 37);
 }
 
-.form-group label {
-  color: rgb(234, 235, 235);
-}
 /*-----------------------------------------------------------------------------*/
 /*INTERFACES*/
 .tab-group {
