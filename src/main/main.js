@@ -72,12 +72,11 @@ function createWindow() {
       })
     );
   }
-  win.webContents.openDevTools()
+  win.webContents.openDevTools();
 
   win.on("closed", function () {
     app.quit();
   });
- 
 }
 
 app.whenReady().then(createWindow);
@@ -184,10 +183,9 @@ ipcMain.handle("stopGraf", () => {
   console.log("STOPED");
 });
 
-
-ipcMain.handle("settings", (event, ipAdd, userName, passWord) => {
+ipcMain.handle("settings", (event, ip, prot, user, pass) => {
   console.log("KURCINA PALCINA");
-  console.log(ipAdd, userName, passWord);
+  console.log(ip, prot, user, pass);
 });
 
 client.on("error", (arg) => {
