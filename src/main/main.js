@@ -10,10 +10,6 @@ var net = require("net");
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 var win;
-var settingWin;
-
-//first position of main window
-let position = [0, 0];
 
 //default telnets parameters
 var defIpAdress = "192.168.100.1";
@@ -76,100 +72,12 @@ function createWindow() {
       })
     );
   }
+  //win.webContents.openDevTools()
 
   win.on("closed", function () {
     app.quit();
   });
-
-  //Tracking main window for the
-  //settingWindow
-  //ovo na pocetku dok miruje
-  position = win.getPosition();
-  //ovo dok se krece
-  win.on("move", function () {
-    position = win.getPosition();
-    //console.log(position);
-  });
-
-  //create menu
-  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-  Menu.setApplicationMenu(mainMenu);
-}
-
-//create settings window
-function createSettingsWindow() {
-  /*
-  settingWin = new BrowserWindow({
-    width: 350,
-    height: 300,
-    title: "Connection Settings",
-    alwaysOnTop: true,
-    parent: win,
-    modal: true,
-    frame: false,
-    transparent: true,
-    webPreferences: {
-      nodeIntegration: true,
-      enableRemoteModule: true,
-    },
-  });
-
-  //set position of settwindow inside maniwindow
-  settingWin.setPosition(position[0] + 100, position[1] + 100);
-
-  settingWin.loadFile("./src/settings.html");
-
-  settingWin.once("ready-to-show", () => {
-    settingWin.show();
-  });
-
-  settingWin.on("close", function () {
-    settingWin = null;
-  });
-  */
-}
-
-//Mneu template
-const mainMenuTemplate = [
-  {
-    label: "Connection Settings",
-    click() {
-      createSettingsWindow();
-    },
-  },
-  {
-    type: "separator",
-  },
-  {
-    label: "Quit",
-    accelerator: process.platform == "darwin" ? "Command +Q" : "Ctrl+Q",
-    click() {
-      app.quit();
-    },
-  },
-];
-
-//optimizacija menu za macos, travis
-if (process.platform == "darwin") {
-  mainMenuTemplate.unshift({});
-}
-// Add developer tools option if in dev
-if (process.env.NODE_ENV !== "production") {
-  mainMenuTemplate.push({
-    label: "Developer Tools",
-    submenu: [
-      {
-        role: "reload",
-      },
-      {
-        label: "Toggle DevTools",
-        accelerator: process.platform == "darwin" ? "Command+I" : "Ctrl+I",
-        click(item, focusedWindow) {
-          focusedWindow.toggleDevTools();
-        },
-      },
-    ],
-  });
+ 
 }
 
 app.whenReady().then(createWindow);

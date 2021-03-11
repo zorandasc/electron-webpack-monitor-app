@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ipcRenderer, remote } from "electron";
-const { dialog } = remote;
+const { Menu, MenuItem } = remote;
 
 const customTitlebar = require("custom-electron-titlebar");
 
@@ -25,6 +25,21 @@ var titleBar = new customTitlebar.Titlebar({
   backgroundColor: customTitlebar.Color.fromHex("#e46425"),
   overflow: "hidden",
 });
+
+const menu = new Menu();
+
+menu.append(new MenuItem(
+  {
+    label: "Toggle DevTools",
+    accelerator: process.platform == "darwin" ? "Command+I" : "Ctrl+I",
+    click:(item, focusedWindow)=> {
+      focusedWindow.toggleDevTools();
+    },
+  }
+));
+
+titleBar.updateMenu(menu);
+
 
 const portovi = [
   { id: 5, label: "Wifi", img: imgWifi },
@@ -151,10 +166,11 @@ const App = () => {
         <div className="toolbar-actions">
           <ConBtn connect={connect} disConnect={disConnect}></ConBtn>
           <TextArea value={textarea}></TextArea>
+          <a href="/?route=settings" className="btn btn-default">
+            <span className="icon icon-cog"></span>
+          </a>
         </div>
-        <a href="/?route=settings" style={{ color: "wheat" }}>
-          KURCINA PALCIAN
-        </a>
+        
       </header>
       <Interfaces
         data={portovi}

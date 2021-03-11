@@ -1,9 +1,13 @@
 import React from "react";
 
+import "../static/css/photon.min.css";
+import "./settins.css";
+
 function closeDialog() {}
 function clearFields() {}
 
 const Settings = () => {
+
   return (
     <form id="form">
       <div className="dialog" id="dialog">
@@ -14,23 +18,23 @@ const Settings = () => {
       </div>
       <div className="container">
         <div className="form-group">
-          <label for="ip">IP Addresss</label>
-          <input type="text" id="ip" name="ip" autofocus />
+          <label htmlFor="ip">IP Addresss</label>
+          <input type="text" id="ip" name="ip" autoFocus />
         </div>
         <div className="form-group">
-          <label for="protocol">Protocol</label>
+          <label htmlFor="protocol">Protocol</label>
           <select type="number" id="protocol" name="protocol">
             <option value="23">Telnet</option>
             <option value="22">SSH</option>
           </select>
         </div>
         <div className="form-group">
-          <label for="username">Username</label>
-          <input type="password" id="username" name="username" maxlength="20" />
+          <label htmlFor="username">Username</label>
+          <input type="password" id="username" name="username" maxLength="20" />
         </div>
         <div className="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" maxlength="20" />
+          <label htmlFor="password">Password</label>
+          <input type="password" id="password" name="password" maxLength="20" />
         </div>
       </div>
       <button type="button" onClick={clearFields} className="btn  save clear">
@@ -42,7 +46,6 @@ const Settings = () => {
       <a
         href="/?route=default"
         type="button"
-        style={{ backgroundColor: "tomato" }}
         className="btn save"
       >
         Back
