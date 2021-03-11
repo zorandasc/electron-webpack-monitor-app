@@ -184,12 +184,12 @@ ipcMain.handle("stopGraf", () => {
   console.log("STOPED");
 });
 
-/*
-//close settingwindow
-ipcMain.handle("settings", () => {
-  settingWin.close();
+
+ipcMain.handle("settings", (event, ipAdd, userName, passWord) => {
+  console.log("KURCINA PALCINA");
+  console.log(ipAdd, userName, passWord);
 });
-*/
+
 client.on("error", (arg) => {
   var message = arg.toString().match(/(?<=(:?^|\s)Error:\s).*$/g);
   win.webContents.send("connect-result", message);

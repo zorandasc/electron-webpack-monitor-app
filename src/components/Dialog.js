@@ -13,9 +13,9 @@ const Dialog = ({show, onClose}) => {
     const style=show?"translateX(1rem)":"translateX(-12rem)"
     return (
         <div 
-            className="dialog" 
+            className="dialogMain" 
             style={{transform:`${style}`}} 
-            id="dialog">
+            id="dialogMain">
             <p>{show}</p>
         </div>
     )

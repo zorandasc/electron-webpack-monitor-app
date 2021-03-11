@@ -57,17 +57,14 @@ textarea::placeholder {
   letter-spacing: 2px;
 }
 .toolbar-actions .btn-default {
-  width: 3rem;
-  height: 3rem;
-  text-decoration: none;
-  cursor: pointer;
-  margin: 0;
+  width: 5rem;
+  height: 4rem;
+  margin-top: 1rem;
   margin-right: 1.5rem;
-  padding: 0;
-  line-height: 2;
-  position: relative;
-  display: block;
-  background: transparent;
+  cursor: pointer;
+  background: none;
+  font-size: 20px;
+  letter-spacing: 2px;
   border: none;
 }
 .toolbar-actions .btn-default span {
@@ -182,7 +179,7 @@ textarea::placeholder {
 }
 
 /*DIALOG*/
-.dialog {
+.dialogMain {
   position: fixed;
   top: 60%;
   left: 0;
@@ -194,7 +191,7 @@ textarea::placeholder {
   padding-left: 1rem;
   padding-right: 1rem;
 }
-.dialog p {
+.dialogMain p {
   color: tomato;
   font-size: 0.8rem;
   letter-spacing: 2px;
