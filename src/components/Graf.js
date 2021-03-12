@@ -60,7 +60,7 @@ const Graf = ({ resultDown, resultUp }) => {
         },
         {
           data: ts2.current,
-          strokeStyle: { r: 255 },
+          strokeStyle: { r:250,g:38,b:0 },
           fillStyle: { r:250, g:38, b:0,a:0.4  },
           lineWidth: 2,
         },

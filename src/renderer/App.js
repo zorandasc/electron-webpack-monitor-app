@@ -7,13 +7,13 @@ const customTitlebar = require("custom-electron-titlebar");
 import "../static/css/photon.min.css";
 import "./index.css";
 
-import imgWifi from "../assets/wifi.png";
-import imgEther from "../assets/ether.png";
+import imgWifi from "../assets/wifiWhite.png";
+import imgEther from "../assets/etherWhite.png";
 
 import ConBtn from "../components/ConBtn";
 import TextArea from "../components/TextArea";
 import Interfaces from "../components/Interfaces";
-import Graf from "../components/Graf";
+//import Graf from "../components/Graf";
 import Graf1 from "../components/Graf1";
 import Legend from "../components/Legend";
 import Krugovi from "../components/Krugovi";

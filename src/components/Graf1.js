@@ -23,8 +23,8 @@ const Graf1 = ({ resultDown, resultUp }) => {
     });
     chart.addTimeSeries(series2.current, {
       lineWidth: 3,
-      strokeStyle: "rgb(255, 0, 255)",
-      fillStyle: "rgba(255, 0, 255, 0.3)",
+      strokeStyle: "rgb(250,38,0)",
+      fillStyle: "rgba(250,38,0, 0.3)",
     });
     chart.streamTo(myCanvas.current, 500);
     return () => {};
@@ -36,7 +36,7 @@ const Graf1 = ({ resultDown, resultUp }) => {
   }, [resultDown, resultUp]);
 
   return (
-    <canvas id="mycanvas" ref={myCanvas} width="600" height="250"></canvas>
+    <canvas id="mycanvas" ref={myCanvas}  width="600" height="250"></canvas>
   );
 };
 
