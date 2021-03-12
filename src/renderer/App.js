@@ -160,6 +160,15 @@ const App = () => {
     setSsid(arg.toString());
   });
 
+  function testonja(){
+    setInterval(function() {
+      setResultDown( Math.random())
+      setResultUp( Math.random())
+    }, 1000);
+  }
+
+
+
   return (
     <div className="window">
       <header className="toolbar toolbar-header">
@@ -187,7 +196,11 @@ const App = () => {
           down={down}
           up={up}
         ></Legend>
-        <Graf1 resultDown={resultDown} resultUp={resultUp}></Graf1>
+        <div>
+          <Graf1 resultDown={resultDown} ></Graf1>
+          <Graf1 resultUp={resultUp}></Graf1>
+        </div>
+        
         <Krugovi resultDown={resultDown} resultUp={resultUp}></Krugovi>
       </div>
 
@@ -203,7 +216,7 @@ const App = () => {
         <div
           className={grafStarted ? "tab-item active" : "tab-item"}
           id="start"
-          onClick={startGraf}
+          onClick={testonja}
           data-tooltip="START GRAF"
         >
           <span className="icon icon-play"></span>

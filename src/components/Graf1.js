@@ -36,7 +36,7 @@ const Graf1 = ({ resultDown, resultUp }) => {
   }, [resultDown, resultUp]);
 
   return (
-    <canvas id="mycanvas" ref={myCanvas}  width="600" height="250"></canvas>
+    <canvas id="mycanvas" ref={myCanvas}  width="600" height="150"></canvas>
   );
 };
 
