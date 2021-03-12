@@ -166,7 +166,7 @@ const App = () => {
         <div className="toolbar-actions">
           <ConBtn connect={connect} disConnect={disConnect}></ConBtn>
           <TextArea value={textarea}></TextArea>
-          <a href="/?route=settings" className="btn btn-default">
+          <a href="/?route=settings" className="btn btn-default" data-title="TARGET SETTINGS">
             <span className="icon icon-cog"></span>
           </a>
         </div>

@@ -66,6 +66,7 @@ textarea::placeholder {
   font-size: 20px;
   letter-spacing: 2px;
   border: none;
+  position: relative;
 }
 .toolbar-actions .btn-default span {
   font-size: 3rem;
@@ -73,6 +74,16 @@ textarea::placeholder {
   margin: 0;
   padding: 0;
   cursor: pointer;
+  color: rgb(228, 100, 37);
+}
+
+.btn-default[data-title]:hover::after {
+  content: attr(data-title);
+  position: absolute;
+  top: -1.6rem;
+  left: -4rem;
+  font-size: 12px;
+  background-color: rgb(26, 33, 34, 0.8);
   color: rgb(228, 100, 37);
 }
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ipcRenderer } from "electron";
 const settings = require("electron-settings");
 
 var key = process.env.ELECTRON_WEBPACK_APP_KEY;
@@ -9,7 +8,7 @@ import "../static/css/photon.min.css";
 import "./settins.css";
 
 //gdije se cuvajua seting podaci na korisnikoj opremi
-console.log("File used for Persisting Data - " + settings.file());
+//console.log("File used for Persisting Data - " + settings.file());
 
 function validateIPaddress(ipaddress) {
   if (
@@ -28,23 +27,20 @@ const Settings = () => {
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [showDialog, setShowDialog] = useState(false);
-  console.log("inicial setting", ip, prot, user, pass);
+  
 
   useEffect(() => {
     //za dobijenja settings podataka nakon
-    //pojavljivanja setting windowa
+    //pojavljivanja html setting windowa
     settings.get("xxx").then((data) => {
       setIp(data.strIp ? data.strIp : "");
       setProt(data.strProt);
       setUser(data.strUser ? encryptor.decrypt(data.strUser) : "");
       setPass(data.strPass ? encryptor.decrypt(data.strPass) : "");
-      console.log(
-        "DOBAVLJNEO IZ TRAPA",
-        data.strIp,
-        data.strProt,
-        data.strUser,
-        data.strPass
-      );
+    }).catch(()=>{
+      //ako nema setting.json objekta
+      // postavi sve na default
+      clearFields()
     });
   }, []);
 
@@ -68,8 +64,6 @@ const Settings = () => {
       strUser: user ? encryptor.encrypt(user) : "",
       strPass: pass ? encryptor.encrypt(pass) : "",
     });
-
-    ipcRenderer.invoke("settings", ip, prot, user, pass);
   }
 
   //set everything to default
@@ -79,7 +73,7 @@ const Settings = () => {
     setUser("");
     setPass("");
     setShowDialog(false);
-    console.log("klirinski proces", ip, prot, user, pass);
+   
   }
 
   return (

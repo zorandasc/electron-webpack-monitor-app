@@ -2,20 +2,21 @@ const { app, BrowserWindow, ipcMain, Menu } = require("electron");
 import * as path from "path";
 
 var net = require("net");
+
 //for storing user connection credencialon pc
-///const settings = require("electron-settings");
+const settings = require("electron-settings");
 // Create an encryptor for encrypt enterd user credencial
-//var encryptor = require("simple-encryptor")(process.env.ELECTRON_WEBPACK_APP_KEY);
+var encryptor = require("simple-encryptor")(process.env.ELECTRON_WEBPACK_APP_KEY);
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
 var win;
 
 //default telnets parameters
-var defIpAdress = "192.168.100.1";
-var defProtocol = "23";
-var defUsername = process.env.ELECTRON_WEBPACK_APP_USER;
-var defPassword = process.env.ELECTRON_WEBPACK_APP_PASS;
+var defIp = "192.168.100.1";
+var defProt = "23";
+var defUser = process.env.ELECTRON_WEBPACK_APP_USER;
+var defPass = process.env.ELECTRON_WEBPACK_APP_PASS;
 
 // isConnected koristimo kod citanja
 //na pocetku je false pa ocitaj tok konektovanja
@@ -104,24 +105,34 @@ client.setEncoding("utf8");
 // ... do actions on behalf of the Renderer
 ipcMain.handle("connect", (event, ...args) => {
   console.log("START CONNECTION");
+  var newIp ;
+  var newProt;
+  var newUser;
+  var newPass;
   //first get the stored setting if it has any
-  //settings.get("key").then((data) => {
-  //console.log("DATA", data)
-  //var { strIp, strProtocol, strUsername, strPassword } = data;
-  //var strIp= strProtocol= strUsername= strPassword=null
-
-  var newIpAdress = defIpAdress;
-  var newProtocol = defProtocol;
-  var newUsername = defUsername;
-  var newPassword = defPassword;
-
-  console.log(newIpAdress, newProtocol, newUsername, newPassword);
+  var data=settings.getSync("xxx")
+  if(data){
+    //AKO POSTOJI SETTINGS.JSOON
+    var { strIp, strProto, strUser, strPass } = data;
+    //IF EMPTY STING USE DEFAULT
+    newIp = strIp?strIp:defIp;
+    newProt =strProto?strProto:defProt;
+    newUser =strUser?strUser:defUser;
+    newPass =strPass?strPass:defPass;
+  }else{
+    //IF SETTINGS.JSOON DOESNOT EXIST USE DEFAULT
+    newIp = defIp;
+    newProt = defProt;
+    newUser = defUser;
+    newPass = defPass;
+  }
+  console.log("NOVACI DEBELJACI", newIp, newProt, newUser, newPass);
 
   //and then try to connect to client
-  client.connect(newProtocol, newIpAdress, () => {
-    client.write(`${newUsername}\r\n`);
+  client.connect(newProt, newIp, () => {
+    client.write(`${newUser}\r\n`);
     setTimeout(() => {
-      client.write(`${newPassword}\r\n`);
+      client.write(`${newPass}\r\n`);
       client.setTimeout(0);
     }, 2000);
   });
@@ -132,7 +143,7 @@ ipcMain.handle("connect", (event, ...args) => {
     //setuj time out na 9 sekundi =>ovo  ce nas odvesti nakon 9s na ontimeuout listener
     client.setTimeout(9000);
   }
-  //});
+ 
 });
 
 // ... do actions on behalf of the Renderer
