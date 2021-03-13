@@ -18,10 +18,10 @@ var defProt = "23";
 var defUser = process.env.ELECTRON_WEBPACK_APP_USER;
 var defPass = process.env.ELECTRON_WEBPACK_APP_PASS;
 
-// isConnected koristimo kod citanja
+// isConnected koristimo kod citanja client.on("data",
 //na pocetku je false pa ocitaj tok konektovanja
-//ako je cucces onad je true , i onda
-//samo preskoci citanje sytstusa
+//ako je succes onad je true , i onda
+//samo preskoci logika citanje stastusa
 var isConnected = false;
 
 //return from setInterval()
@@ -104,7 +104,7 @@ client.setEncoding("utf8");
 
 // ... do actions on behalf of the Renderer
 ipcMain.handle("connect", (event, ...args) => {
-  console.log("START CONNECTION");
+  
   var newIp ;
   var newProt;
   var newUser;
@@ -117,8 +117,8 @@ ipcMain.handle("connect", (event, ...args) => {
     //IF EMPTY STING USE DEFAULT
     newIp = strIp?strIp:defIp;
     newProt =strProto?strProto:defProt;
-    newUser =strUser?strUser:defUser;
-    newPass =strPass?strPass:defPass;
+    newUser =strUser?encryptor.decrypt(data.strUser) :defUser;
+    newPass =strPass?encryptor.decrypt(data.strPass):defPass;
   }else{
     //IF SETTINGS.JSOON DOESNOT EXIST USE DEFAULT
     newIp = defIp;
@@ -126,8 +126,7 @@ ipcMain.handle("connect", (event, ...args) => {
     newUser = defUser;
     newPass = defPass;
   }
-  console.log("NOVACI DEBELJACI", newIp, newProt, newUser, newPass);
-
+ 
   //and then try to connect to client
   client.connect(newProt, newIp, () => {
     client.write(`${newUser}\r\n`);
@@ -148,7 +147,7 @@ ipcMain.handle("connect", (event, ...args) => {
 
 // ... do actions on behalf of the Renderer
 ipcMain.handle("disconnect", (event, ...args) => {
-  console.log("diconent main");
+  
   isConnected = false;
   firstReadDown = true;
   firstReadUp = true;
@@ -177,7 +176,6 @@ ipcMain.handle("startGraf", (event, selected, down, up) => {
   firstReadDown = true;
   firstReadUp = true;
 
-  console.log("STARTED.", downDirection, upDirection, portNum);
   //start new interval reading with choosen portnum
   dataInterval = intervalPortStatistics(portNum);
 });
@@ -191,18 +189,18 @@ ipcMain.handle("stopGraf", () => {
   clearInterval(dataInterval);
   win.webContents.send("resultValDown", 0);
   win.webContents.send("resultValUp", 0);
-  console.log("STOPED");
+ 
 });
 
+/*
 ipcMain.handle("settings", (event, ip, prot, user, pass) => {
-  console.log("KURCINA PALCINA");
   console.log(ip, prot, user, pass);
 });
+*/
 
 client.on("error", (arg) => {
   var message = arg.toString().match(/(?<=(:?^|\s)Error:\s).*$/g);
   win.webContents.send("connect-result", message);
-  console.log("ERORRONJA", arg);
   client.destroy();
 });
 
@@ -212,7 +210,6 @@ client.on("data", function (data) {
   var data = data.toString();
   if (!isConnected) {
     isConnected = checkConnectStatus(data);
-    console.log("ISCONNECTEDDDD", isConnected);
     return;
   }
 
@@ -224,7 +221,6 @@ client.on("data", function (data) {
     if (ssidPatern) {
       win.webContents.send("ssid", ssidPatern[0]);
     }
-    console.log("SSIDIONJA JE:", ssidPatern);
   }
 
   //EVERY timeInterval CALCULATE DOWNSTREAM if downDirection false do nothing
