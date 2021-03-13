@@ -17,7 +17,7 @@ import Interfaces from "../components/Interfaces";
 //import Graf from "../components/Graf";
 //import Graf1 from "../components/Graf1";
 import Legend from "../components/Legend";
-import Krugovi from "../components/Krugovi";
+//import Krugovi from "../components/Krugovi";
 import Dialog from "../components/Dialog";
 import Ssid from "../components/Ssid";
 import Recorder from "../components/Recorder";
@@ -50,6 +50,7 @@ const portovi = [
 ];
 
 const App = () => {
+  console.log("apprerender")
   //THIS REF IS FOR CATHINH UNDERLAINH HTML CANVAS ELEMENT
   const myCanvas = useRef(null);
 
@@ -57,11 +58,11 @@ const App = () => {
   var series1 = useRef(new TimeSeries());
   var series2 = useRef(new TimeSeries());
 
-  //THIS REFS AR FOR MUTABLE VALUES, WHIC DOESNOT RE-RENDER
+  
   //const resDown = useRef(0);
   //const resUp = useRef(0);
-  const [resDown, setResDown] = useState(0);
-  const [resUp, setResUp] = useState(0);
+  //const [resDown, setResDown] = useState(0);
+  //const [resUp, setResUp] = useState(0);
 
   //for selected port
   const [selected, setSelected] = useState(5);
@@ -176,18 +177,17 @@ const App = () => {
   //rezultati dobijeni od maina unutar koje imaintervalna petlja
   ipcRenderer.on("resultValDown", function (event, arg) {
     series1.current.append(new Date().getTime(), Number(arg));
-    setResDown(Number(arg));
+    //setResDown(Number(arg));
   });
 
   //rezultati dobijeni od maina unutar koje imaintervalna petlja
   ipcRenderer.on("resultValUp", function (event, arg) {
     series2.current.append(new Date().getTime(), Number(arg));
-    setResUp(Number(arg));
+    //setResUp(Number(arg));
   });
 
   //za dobijanje ssid name ali samo jednom tokomp prvog
   ipcRenderer.on("ssid", function (event, arg) {
-    //console.log(arg)
     setSsid(arg.toString());
   });
 
@@ -198,6 +198,7 @@ const App = () => {
           <ConBtn connect={connect} disConnect={disConnect}></ConBtn>
           <TextArea value={textarea}></TextArea>
           <a
+          //prevent setting window if open conection
             href={connOpen ? "#" : "/?route=settings"}
             className="btn btn-default"
             data-title="SETTINGS"
@@ -225,7 +226,7 @@ const App = () => {
           up={up}
         ></Legend>
         <canvas ref={myCanvas} id="mycanvas" width="600" height="250"></canvas>
-        <Krugovi resultDown={resDown} resultUp={resUp}></Krugovi>
+        
       </div>
 
       <div className="tab-group control">
