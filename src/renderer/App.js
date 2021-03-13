@@ -20,7 +20,7 @@ import Legend from "../components/Legend";
 import Dialog from "../components/Dialog";
 import Ssid from "../components/Ssid";
 import Recorder from "../components/Recorder";
-import Settings from "../components/SettingsWin"
+import Settings from "../components/SettingsWin";
 
 var titleBar = new customTitlebar.Titlebar({
   backgroundColor: customTitlebar.Color.fromHex("#e46425"),
@@ -155,10 +155,13 @@ const App = () => {
     }
   };
 
-  const showKurec=()=>{
-    console.log(setti)
-      setSetti(true)
-  }
+  const showSettings = () => {
+    //ako je konekcija open true
+    //diseejbluj
+    if (!connOpen) {
+      setSetti(true);
+    }
+  };
 
   //status dobijen od mejna tokom i konektovanja
   ipcRenderer.on("connect-result", function (event, arg) {
@@ -198,13 +201,13 @@ const App = () => {
 
   return (
     <div className="window">
-      {setti && <Settings onClick={()=>setSetti(false)}></Settings>}
+      {setti && <Settings onClick={() => setSetti(false)}></Settings>}
       <header className="toolbar toolbar-header">
         <div className="toolbar-actions">
           <ConBtn connect={connect} disConnect={disConnect}></ConBtn>
           <TextArea value={textarea}></TextArea>
           <a
-            onClick={showKurec}
+            onClick={showSettings}
             className="btn btn-default"
             data-title="SETTINGS"
           >
@@ -213,10 +216,9 @@ const App = () => {
               style={connOpen ? { color: "gray" } : null}
             ></span>
           </a>
-         
         </div>
       </header>
-       
+
       <Interfaces
         data={portovi}
         selected={selected}
@@ -233,9 +235,8 @@ const App = () => {
           up={up}
         ></Legend>
         <canvas ref={myCanvas} id="mycanvas" width="650" height="250"></canvas>
-        
+
         <p className="mjerna">[Mbit/s]</p>
-       
       </div>
 
       <div className="tab-group control">

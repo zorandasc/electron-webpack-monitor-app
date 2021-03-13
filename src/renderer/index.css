@@ -338,9 +338,9 @@ textarea::placeholder {
   left: 0.5rem;
 }
 
+/*--------------------------------------------------------------------*/
 /*FOR SETTING WINDOW*/
-
-#form {
+.container {
   position: absolute;
   top: 0;
   left: 0;
@@ -348,8 +348,15 @@ textarea::placeholder {
   height: 100%;
   z-index: 200;
   background: rgb(26, 33, 34, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  padding-top: 2rem;
+#form {
+  width: 60%;
+  margin: 0 auto;
+  background: rgb(26, 33, 34, 0.9);
 }
 
 #form p {
@@ -360,7 +367,7 @@ textarea::placeholder {
   color: gray;
 }
 
-.container {
+.credencel {
   padding: 2rem;
 }
 .form-group {

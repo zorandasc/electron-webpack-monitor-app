@@ -18,27 +18,29 @@ function validateIPaddress(ipaddress) {
   return false;
 }
 
-const Settings = ({onClick}) => {
+const Settings = ({ onClick }) => {
   const [ip, setIp] = useState("");
   const [prot, setProt] = useState(23);
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [showDialog, setShowDialog] = useState(false);
-  
 
   useEffect(() => {
     //za dobijenja settings podataka nakon
     //pojavljivanja html setting windowa
-    settings.get("xxx").then((data) => {
-      setIp(data.strIp ? data.strIp : "");
-      setProt(data.strProt);
-      setUser(data.strUser ? encryptor.decrypt(data.strUser) : "");
-      setPass(data.strPass ? encryptor.decrypt(data.strPass) : "");
-    }).catch(()=>{
-      //ako nema setting.json objekta
-      // postavi sve na default
-      clearFields()
-    });
+    settings
+      .get("xxx")
+      .then((data) => {
+        setIp(data.strIp ? data.strIp : "");
+        setProt(data.strProt);
+        setUser(data.strUser ? encryptor.decrypt(data.strUser) : "");
+        setPass(data.strPass ? encryptor.decrypt(data.strPass) : "");
+      })
+      .catch(() => {
+        //ako nema setting.json objekta
+        // postavi sve na default
+        clearFields();
+      });
   }, []);
 
   //funkcija koja se poziva tokom sejviranja
@@ -62,7 +64,7 @@ const Settings = ({onClick}) => {
       strPass: pass ? encryptor.encrypt(pass) : "",
     });
     //validation passed go back, onclik from parrent
-    onClick()
+    onClick();
   }
 
   //set everything to default
@@ -72,87 +74,88 @@ const Settings = ({onClick}) => {
     setUser("");
     setPass("");
     setShowDialog(false);
-   
   }
 
   return (
-    <form id="form">
-      {showDialog && (
-        <div className="dialog" id="dialog">
-          <h3>You have entered an invalid IP address!</h3>
-          <button
-            type="button"
-            onClick={() => setShowDialog(false)}
-            id="dialogBtn"
-          >
-            X
-          </button>
-        </div>
-      )}
+    <div className="container">
+      <form id="form">
+        {showDialog && (
+          <div className="dialog" id="dialog">
+            <h3>You have entered an invalid IP address!</h3>
+            <button
+              type="button"
+              onClick={() => setShowDialog(false)}
+              id="dialogBtn"
+            >
+              X
+            </button>
+          </div>
+        )}
 
-      <div className="container">
-        <div className="form-group">
-          <label htmlFor="ip">IP Addresss</label>
-          <input
-            type="text"
-            id="ip"
-            name="ip"
-            autoFocus
-            value={ip}
-            onChange={(e) => setIp(e.target.value)}
-          />
+        <div className="credencel">
+          <div className="form-group">
+            <label htmlFor="ip">IP Addresss</label>
+            <input
+              type="text"
+              id="ip"
+              name="ip"
+              autoFocus
+              value={ip}
+              onChange={(e) => setIp(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="protocol">Protocol</label>
+            <select
+              type="number"
+              id="protocol"
+              name="protocol"
+              value={prot}
+              onChange={(e) => setProt(e.target.value)}
+            >
+              <option value="23">Telnet</option>
+              <option value="22">SSH</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="string"
+              id="username"
+              name="username"
+              maxLength="20"
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              maxLength="20"
+              value={pass}
+              onChange={(e) => setPass(e.target.value)}
+            />
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="protocol">Protocol</label>
-          <select
-            type="number"
-            id="protocol"
-            name="protocol"
-            value={prot}
-            onChange={(e) => setProt(e.target.value)}
-          >
-            <option value="23">Telnet</option>
-            <option value="22">SSH</option>
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="string"
-            id="username"
-            name="username"
-            maxLength="20"
-            value={user}
-            onChange={(e) => setUser(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            maxLength="20"
-            value={pass}
-            onChange={(e) => setPass(e.target.value)}
-          />
-        </div>
-      </div>
-      <button type="button" onClick={clearFields} className="btn save clear">
-        Clear
-      </button>
+        <button type="button" onClick={clearFields} className="btn save clear">
+          Clear
+        </button>
 
-      <a
-        //ako postoji dialog ne idi nigdje
-        //href={showDialog ? null : "/?route=default"}
-        onClick={handleSubmit}
-        type="submit"
-        className="btn save"
-      >
-        Save
-      </a>
-      <p>*If the field is blank, the default will be used.</p>
-    </form>
+        <a
+          //ako postoji dialog ne idi nigdje
+          //href={showDialog ? null : "/?route=default"}
+          onClick={handleSubmit}
+          type="submit"
+          className="btn save"
+        >
+          Save
+        </a>
+        <p>*If the field is blank, the default will be used.</p>
+      </form>
+    </div>
   );
 };
 
