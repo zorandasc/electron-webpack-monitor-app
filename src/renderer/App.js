@@ -14,8 +14,7 @@ import imgEther from "../assets/etherWhite.png";
 import ConBtn from "../components/ConBtn";
 import TextArea from "../components/TextArea";
 import Interfaces from "../components/Interfaces";
-//import Graf from "../components/Graf";
-//import Graf1 from "../components/Graf1";
+
 import Legend from "../components/Legend";
 //import Krugovi from "../components/Krugovi";
 import Dialog from "../components/Dialog";
@@ -50,7 +49,7 @@ const portovi = [
 ];
 
 const App = () => {
-  console.log("apprerender")
+  //console.log("apprerender")
   //THIS REF IS FOR CATHINH UNDERLAINH HTML CANVAS ELEMENT
   const myCanvas = useRef(null);
 
@@ -227,6 +226,8 @@ const App = () => {
         ></Legend>
         <canvas ref={myCanvas} id="mycanvas" width="600" height="250"></canvas>
         
+        <p className="mjerna">[Mbit/s]</p>
+       
       </div>
 
       <div className="tab-group control">
