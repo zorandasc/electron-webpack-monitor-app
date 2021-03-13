@@ -52,7 +52,7 @@ var firstReadUp = true;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 720,
+    width: 750,
     height: 550,
     frame: false,
     titleBarStyle: "hidden",
@@ -73,7 +73,7 @@ function createWindow() {
       })
     );
   }
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 
   win.on("closed", function () {
     app.quit();

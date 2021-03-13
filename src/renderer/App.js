@@ -224,7 +224,7 @@ const App = () => {
           down={down}
           up={up}
         ></Legend>
-        <canvas ref={myCanvas} id="mycanvas" width="600" height="250"></canvas>
+        <canvas ref={myCanvas} id="mycanvas" width="650" height="250"></canvas>
         
         <p className="mjerna">[Mbit/s]</p>
        
