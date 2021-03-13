@@ -1,12 +1,9 @@
 import React, { useRef, useEffect } from "react";
-import { SmoothieChart, TimeSeries } from "../tools/smoothie";
+import { SmoothieChart } from "../tools/smoothie";
 
-const Graf1 = ({ resultDown, resultUp }) => {
+const Graf1 = ({ series1, series2 }) => {
   // Create the chart
   const myCanvas = useRef(null);
-  // Create a time series
-  var series1 = useRef(new TimeSeries());
-  var series2 = useRef(new TimeSeries());
 
   useEffect(() => {
     var chart = new SmoothieChart({
@@ -16,27 +13,21 @@ const Graf1 = ({ resultDown, resultUp }) => {
       timestampFormatter: SmoothieChart.timeFormatter,
       maxValueScale: 1.2,
     });
-    chart.addTimeSeries(series1.current, {
+    chart.addTimeSeries(series1, {
       lineWidth: 3,
       strokeStyle: "#00ff00",
       fillStyle: "rgba(0, 255, 0, 0.4)",
     });
-    chart.addTimeSeries(series2.current, {
+    chart.addTimeSeries(series2, {
       lineWidth: 3,
       strokeStyle: "rgb(250,38,0)",
       fillStyle: "rgba(250,38,0, 0.3)",
     });
     chart.streamTo(myCanvas.current, 500);
-    return () => {};
-  }, []);
-
-  useEffect(() => {
-    series1.current.append(Date.now(), resultDown);
-    series2.current.append(Date.now(), resultUp);
-  }, [resultDown, resultUp]);
+  }, [series1, series2]);
 
   return (
-    <canvas id="mycanvas" ref={myCanvas}  width="600" height="150"></canvas>
+    <canvas id="mycanvas" ref={myCanvas} width="600" height="150"></canvas>
   );
 };
 

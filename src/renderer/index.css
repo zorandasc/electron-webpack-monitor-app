@@ -80,8 +80,8 @@ textarea::placeholder {
 .btn-default[data-title]:hover::after {
   content: attr(data-title);
   position: absolute;
-  top: -1.6rem;
-  left: -4rem;
+  top: -1rem;
+  left: -0.8rem;
   font-size: 12px;
   background-color: rgb(26, 33, 34, 0.8);
   color: rgb(228, 100, 37);

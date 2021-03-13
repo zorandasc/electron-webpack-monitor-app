@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ipcRenderer, remote } from "electron";
 const { Menu, MenuItem } = remote;
+import { SmoothieChart, TimeSeries } from "../tools/smoothie";
 
 const customTitlebar = require("custom-electron-titlebar");
 
@@ -14,7 +15,7 @@ import ConBtn from "../components/ConBtn";
 import TextArea from "../components/TextArea";
 import Interfaces from "../components/Interfaces";
 //import Graf from "../components/Graf";
-import Graf1 from "../components/Graf1";
+//import Graf1 from "../components/Graf1";
 import Legend from "../components/Legend";
 import Krugovi from "../components/Krugovi";
 import Dialog from "../components/Dialog";
@@ -28,18 +29,17 @@ var titleBar = new customTitlebar.Titlebar({
 
 const menu = new Menu();
 
-menu.append(new MenuItem(
-  {
+menu.append(
+  new MenuItem({
     label: "Toggle DevTools",
     accelerator: process.platform == "darwin" ? "Command+I" : "Ctrl+I",
-    click:(item, focusedWindow)=> {
+    click: (item, focusedWindow) => {
       focusedWindow.toggleDevTools();
     },
-  }
-));
+  })
+);
 
 titleBar.updateMenu(menu);
-
 
 const portovi = [
   { id: 5, label: "Wifi", img: imgWifi },
@@ -50,6 +50,19 @@ const portovi = [
 ];
 
 const App = () => {
+  //THIS REF IS FOR CATHINH UNDERLAINH HTML CANVAS ELEMENT
+  const myCanvas = useRef(null);
+
+  //THIS REFS AR FOR MUTABLE VALUES, WHIC DOESNOT RE-RENDER
+  var series1 = useRef(new TimeSeries());
+  var series2 = useRef(new TimeSeries());
+
+  //THIS REFS AR FOR MUTABLE VALUES, WHIC DOESNOT RE-RENDER
+  //const resDown = useRef(0);
+  //const resUp = useRef(0);
+  const [resDown, setResDown] = useState(0);
+  const [resUp, setResUp] = useState(0);
+
   //for selected port
   const [selected, setSelected] = useState(5);
 
@@ -72,8 +85,28 @@ const App = () => {
   //for setting wifi ssid
   const [ssid, setSsid] = useState("");
 
-  const [resultDown, setResultDown] = useState(0);
-  const [resultUp, setResultUp] = useState(0);
+  //INICIALIZING SMOOTHIE CHAR, BUT OOLY ONCE
+  useEffect(() => {
+    var chart = new SmoothieChart({
+      labels: { fontSize: 15 },
+      interpolation: "bezier",
+      tooltip: true,
+      minValue: 0,
+      timestampFormatter: SmoothieChart.timeFormatter,
+      maxValueScale: 1.2,
+    });
+    chart.addTimeSeries(series1.current, {
+      lineWidth: 3,
+      strokeStyle: "#00ff00",
+      fillStyle: "rgba(0, 255, 0, 0.4)",
+    });
+    chart.addTimeSeries(series2.current, {
+      lineWidth: 3,
+      strokeStyle: "rgb(250,38,0)",
+      fillStyle: "rgba(250,38,0, 0.3)",
+    });
+    chart.streamTo(myCanvas.current, 500);
+  }, []);
 
   const connect = () => {
     ipcRenderer.invoke("connect");
@@ -142,16 +175,14 @@ const App = () => {
 
   //rezultati dobijeni od maina unutar koje imaintervalna petlja
   ipcRenderer.on("resultValDown", function (event, arg) {
-    setResultDown(Number(arg));
-    //console.log("resuldown",resultDown)
-    //series1.append(Date.now(), resultDown);
+    series1.current.append(new Date().getTime(), Number(arg));
+    setResDown(Number(arg));
   });
 
   //rezultati dobijeni od maina unutar koje imaintervalna petlja
   ipcRenderer.on("resultValUp", function (event, arg) {
-    setResultUp(Number(arg));
-    //console.log("resultup",resultUp)
-    //series2.append(Date.now(), resultUp);
+    series2.current.append(new Date().getTime(), Number(arg));
+    setResUp(Number(arg));
   });
 
   //za dobijanje ssid name ali samo jednom tokomp prvog
@@ -160,26 +191,23 @@ const App = () => {
     setSsid(arg.toString());
   });
 
-  function testonja(){
-    setInterval(function() {
-      setResultDown( Math.random())
-      setResultUp( Math.random())
-    }, 1000);
-  }
-
-
-
   return (
     <div className="window">
       <header className="toolbar toolbar-header">
         <div className="toolbar-actions">
           <ConBtn connect={connect} disConnect={disConnect}></ConBtn>
           <TextArea value={textarea}></TextArea>
-          <a href="/?route=settings" className="btn btn-default" data-title="TARGET SETTINGS">
-            <span className="icon icon-cog"></span>
+          <a
+            href={connOpen ? "#" : "/?route=settings"}
+            className="btn btn-default"
+            data-title="SETTINGS"
+          >
+            <span
+              className="icon icon-cog"
+              style={connOpen ? { color: "gray" } : null}
+            ></span>
           </a>
         </div>
-        
       </header>
       <Interfaces
         data={portovi}
@@ -196,12 +224,8 @@ const App = () => {
           down={down}
           up={up}
         ></Legend>
-        <div>
-          <Graf1 resultDown={resultDown} ></Graf1>
-          <Graf1 resultUp={resultUp}></Graf1>
-        </div>
-        
-        <Krugovi resultDown={resultDown} resultUp={resultUp}></Krugovi>
+        <canvas ref={myCanvas} id="mycanvas" width="600" height="250"></canvas>
+        <Krugovi resultDown={resDown} resultUp={resUp}></Krugovi>
       </div>
 
       <div className="tab-group control">
@@ -216,7 +240,7 @@ const App = () => {
         <div
           className={grafStarted ? "tab-item active" : "tab-item"}
           id="start"
-          onClick={testonja}
+          onClick={startGraf}
           data-tooltip="START GRAF"
         >
           <span className="icon icon-play"></span>
