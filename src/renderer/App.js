@@ -20,6 +20,7 @@ import Legend from "../components/Legend";
 import Dialog from "../components/Dialog";
 import Ssid from "../components/Ssid";
 import Recorder from "../components/Recorder";
+import Settings from "../components/SettingsWin"
 
 var titleBar = new customTitlebar.Titlebar({
   backgroundColor: customTitlebar.Color.fromHex("#e46425"),
@@ -57,9 +58,6 @@ const App = () => {
   var series1 = useRef(new TimeSeries());
   var series2 = useRef(new TimeSeries());
 
-  
-  //const resDown = useRef(0);
-  //const resUp = useRef(0);
   //const [resDown, setResDown] = useState(0);
   //const [resUp, setResUp] = useState(0);
 
@@ -84,6 +82,9 @@ const App = () => {
 
   //for setting wifi ssid
   const [ssid, setSsid] = useState("");
+
+  //for displaying setting window
+  const [setti, setSetti] = useState(false);
 
   //INICIALIZING SMOOTHIE CHAR, BUT OOLY ONCE
   useEffect(() => {
@@ -154,6 +155,11 @@ const App = () => {
     }
   };
 
+  const showKurec=()=>{
+    console.log(setti)
+      setSetti(true)
+  }
+
   //status dobijen od mejna tokom i konektovanja
   ipcRenderer.on("connect-result", function (event, arg) {
     let message = arg.toString();
@@ -192,13 +198,13 @@ const App = () => {
 
   return (
     <div className="window">
+      {setti && <Settings onClick={()=>setSetti(false)}></Settings>}
       <header className="toolbar toolbar-header">
         <div className="toolbar-actions">
           <ConBtn connect={connect} disConnect={disConnect}></ConBtn>
           <TextArea value={textarea}></TextArea>
           <a
-          //prevent setting window if open conection
-            href={connOpen ? "#" : "/?route=settings"}
+            onClick={showKurec}
             className="btn btn-default"
             data-title="SETTINGS"
           >
@@ -207,8 +213,10 @@ const App = () => {
               style={connOpen ? { color: "gray" } : null}
             ></span>
           </a>
+         
         </div>
       </header>
+       
       <Interfaces
         data={portovi}
         selected={selected}

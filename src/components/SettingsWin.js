@@ -4,9 +4,6 @@ const settings = require("electron-settings");
 var key = process.env.ELECTRON_WEBPACK_APP_KEY;
 var encryptor = require("simple-encryptor")(key);
 
-import "../static/css/photon.min.css";
-import "./settins.css";
-
 //gdije se cuvajua seting podaci na korisnikoj opremi
 //console.log("File used for Persisting Data - " + settings.file());
 
@@ -21,7 +18,7 @@ function validateIPaddress(ipaddress) {
   return false;
 }
 
-const Settings = () => {
+const Settings = ({onClick}) => {
   const [ip, setIp] = useState("");
   const [prot, setProt] = useState(23);
   const [user, setUser] = useState("");
@@ -64,6 +61,8 @@ const Settings = () => {
       strUser: user ? encryptor.encrypt(user) : "",
       strPass: pass ? encryptor.encrypt(pass) : "",
     });
+    //validation passed go back, onclik from parrent
+    onClick()
   }
 
   //set everything to default
@@ -145,7 +144,7 @@ const Settings = () => {
 
       <a
         //ako postoji dialog ne idi nigdje
-        href={showDialog ? null : "/?route=default"}
+        //href={showDialog ? null : "/?route=default"}
         onClick={handleSubmit}
         type="submit"
         className="btn save"
