@@ -1,26 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ipcRenderer, remote } from "electron";
 const { Menu, MenuItem } = remote;
-import { SmoothieChart, TimeSeries } from "../tools/smoothie";
+import { SmoothieChart, TimeSeries } from "./tools/smoothie.js";
 
 const customTitlebar = require("custom-electron-titlebar");
 
-import "../static/css/photon.min.css";
+import "./css/photon.min.css";
 import "./index.css";
 
-import imgWifi from "../assets/wifiWhite.png";
-import imgEther from "../assets/etherWhite.png";
+import imgWifi from "./assets/wifiWhite.png";
+import imgEther from "./assets/etherWhite.png";
 
-import ConBtn from "../components/ConBtn";
-import TextArea from "../components/TextArea";
-import Interfaces from "../components/Interfaces";
+import ConBtn from "./components/ConBtn.js";
+import TextArea from "./components/TextArea.js";
+import Interfaces from "./components/Interfaces.js";
 
-import Legend from "../components/Legend";
-//import Krugovi from "../components/Krugovi";
-import Dialog from "../components/Dialog";
-import Ssid from "../components/Ssid";
-import Recorder from "../components/Recorder";
-import Settings from "../components/SettingsWin";
+import Legend from "./components/Legend.js";
+//import Krugovi from "./components/Krugovi";
+import Dialog from "./components/Dialog.js";
+import Ssid from "./components/Ssid.js";
+import Recorder from "./components/Recorder.js";
+import Settings from "./components/SettingsWin.js";
 
 var titleBar = new customTitlebar.Titlebar({
   backgroundColor: customTitlebar.Color.fromHex("#e46425"),
@@ -34,11 +34,11 @@ const title = "Huawei ONT Traffic Monitoring";
 
 menu.append(
   new MenuItem({
-    label: "Toggle DevTools",
-    accelerator: process.platform == "darwin" ? "Command+I" : "Ctrl+I",
-    click: (item, focusedWindow) => {
-      focusedWindow.toggleDevTools();
-    },
+    label: " ",
+    //accelerator: process.platform == "darwin" ? "Command+I" : "Ctrl+I",
+    //click: (item, focusedWindow) => {
+    //  focusedWindow.toggleDevTools();
+    //},
   })
 );
 

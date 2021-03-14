@@ -1,5 +1,6 @@
-const { app, BrowserWindow, ipcMain, Menu } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 import * as path from "path";
+import { format as formatUrl } from 'url'
 
 var net = require("net");
 
@@ -187,6 +188,7 @@ ipcMain.handle("stopGraf", () => {
 
   //clear old loop interval
   clearInterval(dataInterval);
+  
   win.webContents.send("resultValDown", 0);
   win.webContents.send("resultValUp", 0);
  

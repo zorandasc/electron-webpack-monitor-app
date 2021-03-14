@@ -1,12 +1,22 @@
 {
-  "name": "electron-webpack-quick-start",
+  "name": "huawei-ont-traffic-monitor",
   "version": "0.0.0",
   "license": "MIT",
+  "author": "Nazorxxx",
+  "description": "Huawei ONT Traffic Monitor App",
+  "keywords": ["HUawei", "ONT", "Traffic", "Bandwidth","Utilization"],
   "scripts": {
     "dev": "electron-webpack dev",
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
+  },
+  "build": {
+    "appId": "Huawei_ONT_Traffic_Monitor.app",
+    "win": {
+      "target":"portable",
+      "icon" : "build/icon.ico"
+    }
   },
   "dependencies": {
     "custom-electron-titlebar": "^3.2.6",
