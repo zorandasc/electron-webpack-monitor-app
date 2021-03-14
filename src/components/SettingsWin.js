@@ -52,18 +52,19 @@ const Settings = ({ onClick }) => {
       setShowDialog(true);
       return;
     }
+    //validation passed
+    //sacuvaj sve u .json
+
     //ako je passwor epmty field, do nothing
     //a ako postoji encrytpuj
-
-    //izabran je setSYnc tako da se prvo to
-    //izvrsi prije dole closing windowa
-    settings.setSync("xxx", {
+    //enkripcija mora biti unutar ove async metode
+    settings.set("xxx", {
       strIp: ip,
       strProt: prot,
       strUser: user ? encryptor.encrypt(user) : "",
       strPass: pass ? encryptor.encrypt(pass) : "",
     });
-    //validation passed go back, onclik from parrent
+    //go back, onclik dobavita from parrent
     onClick();
   }
 

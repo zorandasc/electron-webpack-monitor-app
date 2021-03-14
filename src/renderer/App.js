@@ -28,6 +28,8 @@ var titleBar = new customTitlebar.Titlebar({
 });
 
 const menu = new Menu();
+//OVDIJE JE JAKO VAZNO DA KAD SE MIJENJA
+//TITTLE OF WINDOW DA SE MIJENJA I ZA RECORDER
 const title = "Huawei ONT Traffic Monitoring";
 
 menu.append(
@@ -41,8 +43,7 @@ menu.append(
 );
 
 titleBar.updateMenu(menu);
-//OVDIJE JE JAKO VAZNO DA KAD SE MIJENJA TITLE
-//DA SE MIJENJA I ZA RECORDER
+
 titleBar.updateTitle(title);
 
 const portovi = [
