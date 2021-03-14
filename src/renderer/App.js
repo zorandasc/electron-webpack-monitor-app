@@ -30,7 +30,7 @@ var titleBar = new customTitlebar.Titlebar({
 const menu = new Menu();
 //OVDIJE JE JAKO VAZNO DA KAD SE MIJENJA
 //TITTLE OF WINDOW DA SE MIJENJA I ZA RECORDER
-const title = "Huawei ONT Traffic Monitoring";
+const title = "Huawei ONT Bandwidth Utilization Monitor";
 
 menu.append(
   new MenuItem({

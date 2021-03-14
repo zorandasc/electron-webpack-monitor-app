@@ -1,9 +1,9 @@
 {
-  "name": "huawei-ont-traffic-monitor",
+  "name": "bandwidth-monitor",
   "version": "0.0.0",
   "license": "MIT",
   "author": "Nazorxxx",
-  "description": "Huawei ONT Traffic Monitor App",
+  "description": "Bandwidth Utilization Monitor App For Huawei ONT",
   "keywords": ["HUawei", "ONT", "Traffic", "Bandwidth","Utilization"],
   "scripts": {
     "dev": "electron-webpack dev",
@@ -12,10 +12,10 @@
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
   "build": {
-    "appId": "Huawei_ONT_Traffic_Monitor.app",
+    "appId": "Huawei_ONT_Bandwidth_Utilization_Monitor.app",
     "win": {
       "target":"portable",
-      "icon" : "build/icon.ico"
+      "icon" : "build/icon.png"
     }
   },
   "dependencies": {
