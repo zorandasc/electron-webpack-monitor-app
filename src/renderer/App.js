@@ -133,13 +133,17 @@ const App = () => {
 
   const startGraf = () => {
     if (connOpen) {
-      //SETUJ GRAF STARTED
-      setGrafStarted(true);
-      //POSALJI MAINU SELECTED PORT, DOWN, UP
-      ipcRenderer.invoke("startGraf", selected, down, up);
+      //SETUJ GRAF STARTED if not started
+      if(!grafStarted){
+        setGrafStarted(true);
+        
+        //POSALJI MAINU SELECTED PORT, DOWN, UP
+        ipcRenderer.invoke("startGraf", selected, down, up);
 
-      //SHOW DIALOG STARTED
-      setShowDialog("Graf Started.");
+        //SHOW DIALOG STARTED
+        setShowDialog("Graf Started.");
+      }
+      
     } else {
       //elese pokazi dijalog
       setShowDialog("Sorry. Connection is closed.");
