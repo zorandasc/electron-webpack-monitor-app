@@ -4,7 +4,7 @@ import { writeFile } from "fs";
 
 const { dialog } = remote;
 
-const Recorder = () => {
+const Recorder = ({ title }) => {
   const [recording, setRecording] = useState(false);
 
   //koristiom ref da bi sacuvakli mediaoRecorder
@@ -19,12 +19,13 @@ const Recorder = () => {
   //PRIPREMI SVE U STARTU, capture descop stream,
   //create media recorder, creatae hendlers
   useEffect(async () => {
+    console.log("STRAT USEEFEVT");
     inputSources = await desktopCapturer.getSources({
       types: ["window", "screen"],
     });
     //capture only this window
     inputSources.map((source) => {
-      if (source.name === "RGW Traffic Monitoring") {
+      if (source.name === title) {
         selectSource(source);
       }
     });
@@ -48,6 +49,7 @@ const Recorder = () => {
     //browser build in mediarecorder, to record
     // MediaRecorder instance to capture footage
     const options = { mimeType: "video/webm; codecs=vp9" };
+
     mediaRecorder.current = new MediaRecorder(stream, options);
 
     // Register Event Handlers
@@ -100,7 +102,7 @@ const Recorder = () => {
           className="tab-item active2"
           id="stopRec"
           onClick={stopReco}
-          data-tooltip="RECORDING"
+          data-tooltip="CAPTURING"
         >
           <span className="icon icon-record"></span>
         </div>
@@ -109,7 +111,7 @@ const Recorder = () => {
           className="tab-item"
           id="startRec"
           onClick={startReco}
-          data-tooltip="START RECORDING"
+          data-tooltip="SCREEN CAPTURE"
         >
           <span className="icon icon-record"></span>
         </div>

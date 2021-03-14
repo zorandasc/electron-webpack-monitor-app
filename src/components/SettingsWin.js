@@ -114,13 +114,15 @@ const Settings = ({ onClick }) => {
               onChange={(e) => setProt(e.target.value)}
             >
               <option value="23">Telnet</option>
-              <option value="22">SSH</option>
+              <option value="22" disabled>
+                SSH
+              </option>
             </select>
           </div>
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input
-              type="string"
+              type="password"
               id="username"
               name="username"
               maxLength="20"

@@ -1,13 +1,13 @@
-.window {
-  position: relative;
+.window-title {
+  color: rgb(26, 33, 34);
+  font-size: 18px;
+  font-weight: bolder;
+  letter-spacing: 2px;
 }
+
 .menubar-menu-button {
   color: rgb(234, 235, 235);
   letter-spacing: 2px;
-}
-.window-title {
-  color: rgb(234, 235, 235);
-  font-size: 16px;
 }
 
 .toolbar {
@@ -363,7 +363,7 @@ textarea::placeholder {
   display: inline-block;
   font-size: 11px;
   margin: 2rem;
-
+  letter-spacing: 2px;
   color: gray;
 }
 

@@ -28,6 +28,7 @@ var titleBar = new customTitlebar.Titlebar({
 });
 
 const menu = new Menu();
+const title = "Huawei ONT Traffic Monitoring";
 
 menu.append(
   new MenuItem({
@@ -40,6 +41,9 @@ menu.append(
 );
 
 titleBar.updateMenu(menu);
+//OVDIJE JE JAKO VAZNO DA KAD SE MIJENJA TITLE
+//DA SE MIJENJA I ZA RECORDER
+titleBar.updateTitle(title);
 
 const portovi = [
   { id: 5, label: "Wifi", img: imgWifi },
@@ -256,7 +260,7 @@ const App = () => {
         >
           <span className="icon icon-play"></span>
         </div>
-        <Recorder></Recorder>
+        <Recorder title={title}></Recorder>
       </div>
     </div>
   );
